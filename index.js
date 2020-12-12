@@ -1,3 +1,24 @@
+document.body.innerHTML += `<style>
+body {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, "Helvetica Neue", "Helvetica", Arial, Tahoma, Geneva, Verdana, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+#log {
+    background-color: #e5e9f0;
+    max-width: 300px;
+    min-height: 290px;
+    padding-top: 10px;
+    text-align: center;
+    font-size: 1.5rem;
+    display: block;
+}
+</style>
+<div class="dashboard">
+    <h1>DiscordHTML</h1>
+    <h3>Logi:</h3>
+    <span id="log">
+    </span>
+</div>`;
+
 class Client extends HTMLElement {
     constructor() {
         super();
@@ -6,6 +27,7 @@ class Client extends HTMLElement {
         try {
             token = this.attributes.getNamedItem("token").nodeValue;
         } catch (e) {
+            document.querySelector("#log").innerHTML = "a token to gdzie?" + document.querySelector("#log").innerHTML;
             return console.error("a token to gdzie")
         }
         try {
@@ -49,6 +71,7 @@ class Client extends HTMLElement {
 
         this.socket = new WebSocket("wss://gateway.discord.gg/?v=8&encoding=json");
         this.socket.onmessage = (msg) => message(msg);
+        document.querySelector("#log").innerHTML += "Połączono!";
     }
 }
 
